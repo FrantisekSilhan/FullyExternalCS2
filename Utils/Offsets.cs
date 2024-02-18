@@ -37,9 +37,12 @@ public abstract class Offsets
     public static int m_bIsScoped;
     public static int m_flFlashDuration;
     public static int m_iszPlayerName;
+    public static int m_iAmmo;
+    public static int m_iClip1;
+    public static int m_iClip2;
 
 
-    public static readonly Dictionary<string, int> Bones = new()
+	public static readonly Dictionary<string, int> Bones = new()
     {
         { "head", 6 },
         { "neck_0", 5 },
@@ -105,6 +108,9 @@ public abstract class Offsets
             m_bIsScoped = destData?.m_bIsScoped;
             m_flFlashDuration = destData?.m_flFlashDuration;
             m_iszPlayerName = destData?.m_iszPlayerName;
+            m_iAmmo = destData?.m_iAmmo;
+			m_iClip1 = destData?.m_iClip1;
+			m_iClip2 = destData?.m_iClip2;
             return;
         }
 
@@ -142,9 +148,13 @@ public abstract class Offsets
         destData.m_bIsScoped = sourceDataClient.C_CSPlayerPawnBase.data?.m_bIsScoped.value!;
         destData.m_flFlashDuration = sourceDataClient.C_CSPlayerPawnBase.data?.m_flFlashDuration.value!;
         destData.m_iszPlayerName = sourceDataClient.CBasePlayerController.data?.m_iszPlayerName.value!;
+        destData.m_iAmmo = sourceDataClient.CPlayer_WeaponServices.data?.m_iAmmo.value!;
+        destData.m_iClip1 = sourceDataClient.C_BasePlayerWeapon.data?.m_iClip1.value!;
+        destData.m_iClip2 = sourceDataClient.C_BasePlayerWeapon.data?.m_iClip2.value!;
 
 
-        string updatedDestJson = JsonConvert.SerializeObject(destData, Formatting.Indented);
+		// Write updated destination JSON
+		string updatedDestJson = JsonConvert.SerializeObject(destData, Formatting.Indented);
         File.WriteAllText(destPath, updatedDestJson);
 
         Console.WriteLine("Offsets updated in the local file.");
@@ -181,6 +191,9 @@ public abstract class Offsets
         m_bIsScoped = updatedDestData?.m_bIsScoped;
         m_flFlashDuration = updatedDestData?.m_flFlashDuration;
         m_iszPlayerName = updatedDestData?.m_iszPlayerName;
+        m_iAmmo = updatedDestData?.m_iAmmo;
+		m_iClip1 = updatedDestData?.m_iClip1;
+        m_iClip2 = updatedDestData?.m_iClip2;
     }
 
     private static dynamic FetchJsonAndDeserialize(string url)

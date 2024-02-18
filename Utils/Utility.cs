@@ -74,6 +74,10 @@ public static class Utility
         return (float)(degree * PiOver180);
     }
 
+    public static float RadianToDegree(this float radian) {
+		return (float)(radian / PiOver180);
+	}
+
 
     public static Rectangle GetClientRectangle(IntPtr handle)
     {

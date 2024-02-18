@@ -174,8 +174,9 @@ public class Graphics : ThreadedServiceBase
         // draw here
         EspAimCrosshair.Draw(this);
         WindowOverlay.Draw(GameProcess, this);
-        SkeletonEsp.Draw(this);
+        //SkeletonEsp.Draw(this);
         EspBox.Draw(this);
+        //AimBotVisuals.Draw(this, AimBot.AimBotFov);
     }
 
 
@@ -209,4 +210,49 @@ public class Graphics : ThreadedServiceBase
 
         for (var i = 0; i < verts.Length - 1; i++) DrawLine(color, verts[i], verts[i + 1]);
     }
+
+	public void DrawCircle(Color color, Vector2 center, float radius, int segments = 36) {
+		Vector2[] circleVertices = new Vector2[segments];
+
+		float angleIncrement = (float)(2 * Math.PI / segments);
+		float angle = 0;
+
+		for (int i = 0; i < segments; i++) {
+			float x = center.X + radius * (float)Math.Cos(angle);
+			float y = center.Y + radius * (float)Math.Sin(angle);
+			circleVertices[i] = new Vector2(x, y);
+			angle += angleIncrement;
+		}
+
+		for (int i = 0; i < segments - 1; i++) {
+			DrawLine(color, circleVertices[i], circleVertices[i + 1]);
+		}
+
+		DrawLine(color, circleVertices[segments - 1], circleVertices[0]);
+	}
+
+	public void DrawCircleWithThickness(Color color, Vector2 center, float radius, float thickness, int segments = 36) {
+		float angleIncrement = (float)(2 * Math.PI / segments);
+		float angle = 0;
+
+		for (int i = 0; i < segments; i++) {
+			float x1 = center.X + (radius - thickness / 2) * (float)Math.Cos(angle);
+			float y1 = center.Y + (radius - thickness / 2) * (float)Math.Sin(angle);
+
+			float x2 = center.X + (radius + thickness / 2) * (float)Math.Cos(angle);
+			float y2 = center.Y + (radius + thickness / 2) * (float)Math.Sin(angle);
+
+			DrawLine(color, new Vector2(x1, y1), new Vector2(x2, y2));
+			angle += angleIncrement;
+		}
+
+		float lastX1 = center.X + (radius - thickness / 2) * (float)Math.Cos(0);
+		float lastY1 = center.Y + (radius - thickness / 2) * (float)Math.Sin(0);
+
+		float lastX2 = center.X + (radius + thickness / 2) * (float)Math.Cos(0);
+		float lastY2 = center.Y + (radius + thickness / 2) * (float)Math.Sin(0);
+
+		DrawLine(color, new Vector2(lastX1, lastY1), new Vector2(lastX2, lastY2));
+	}
+
 }

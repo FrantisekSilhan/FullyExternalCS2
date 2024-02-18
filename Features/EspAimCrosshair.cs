@@ -10,7 +10,6 @@ namespace CS2Cheat.Features;
 public static class EspAimCrosshair
 {
     private static Vector3 _pointClip = Vector3.Zero;
-
     private static Vector3 GetPositionScreen(GameProcess gameProcess, GameData gameData)
     {
         var screenSize = gameProcess.WindowRectangleClient.Size;
@@ -38,15 +37,17 @@ public static class EspAimCrosshair
 
     private static void Draw(Graphics.Graphics graphics, Vector2 pointScreen)
     {
-        const int crosshairRadius = 12;
+        const int crosshairRadius = 3;
         DrawCrosshair(graphics, pointScreen, crosshairRadius);
     }
 
     private static void DrawCrosshair(Graphics.Graphics graphics, Vector2 pointScreen, int radius)
     {
-        graphics.DrawLine(Color.Green, pointScreen - new Vector2(radius, 0),
-            pointScreen + new Vector2(radius, 0));
-        graphics.DrawLine(Color.Green, pointScreen - new Vector2(0, radius),
-            pointScreen + new Vector2(0, radius));
+        if (graphics.GameData.Player.ShotsFired > 0 && !(graphics.GameData.Player.ShotsFired >= (graphics.GameData.Player.Clip1 + graphics.GameData.Player.ShotsFired))) {
+		    graphics.DrawCircleWithThickness(Color.Red, pointScreen, radius, 2f, 256);
+        }
+        //graphics.DrawCircle(Color.Green, pointScreen, radius);
+		//graphics.DrawLine(Color.Green, pointScreen - new Vector2(radius, 0), pointScreen + new Vector2(radius, 0));
+        //graphics.DrawLine(Color.Green, pointScreen - new Vector2(0, radius), pointScreen + new Vector2(0, radius));
     }
 }

@@ -19,26 +19,45 @@ public class Entity(int index) : EntityBase
     protected internal int FlashAlpha { get; private set; }
 
 
-    public Dictionary<string, Vector3> BonePos { get; } = new()
+	public enum Bone {
+		head,
+		neck_0,
+		spine_1,
+		spine_2,
+		pelvis,
+		arm_upper_L,
+		arm_lower_L,
+		hand_L,
+		arm_upper_R,
+		arm_lower_R,
+		hand_R,
+		leg_upper_L,
+		leg_lower_L,
+		ankle_L,
+		leg_upper_R,
+		leg_lower_R,
+		ankle_R
+	}
+	public Dictionary<string, Vector3> BonePos { get; } = new()
     {
-        { "head", Vector3.Zero },
-        { "neck_0", Vector3.Zero },
-        { "spine_1", Vector3.Zero },
-        { "spine_2", Vector3.Zero },
-        { "pelvis", Vector3.Zero },
-        { "arm_upper_L", Vector3.Zero },
-        { "arm_lower_L", Vector3.Zero },
-        { "hand_L", Vector3.Zero },
-        { "arm_upper_R", Vector3.Zero },
-        { "arm_lower_R", Vector3.Zero },
-        { "hand_R", Vector3.Zero },
-        { "leg_upper_L", Vector3.Zero },
-        { "leg_lower_L", Vector3.Zero },
-        { "ankle_L", Vector3.Zero },
-        { "leg_upper_R", Vector3.Zero },
-        { "leg_lower_R", Vector3.Zero },
-        { "ankle_R", Vector3.Zero }
-    };
+        { Bone.head.ToString(), Vector3.Zero },
+        { Bone.neck_0.ToString(), Vector3.Zero },
+        { Bone.spine_1.ToString(), Vector3.Zero },
+        { Bone.spine_2.ToString(), Vector3.Zero },
+        { Bone.pelvis.ToString(), Vector3.Zero },
+        { Bone.arm_upper_L.ToString(), Vector3.Zero },
+        { Bone.arm_lower_L.ToString(), Vector3.Zero },
+        { Bone.hand_L.ToString(), Vector3.Zero },
+        { Bone.arm_upper_R.ToString(), Vector3.Zero },
+        { Bone.arm_lower_R.ToString(), Vector3.Zero },
+        { Bone.hand_R.ToString(), Vector3.Zero },
+        { Bone.leg_upper_L.ToString(), Vector3.Zero },
+        { Bone.leg_lower_L.ToString(), Vector3.Zero },
+        { Bone.ankle_L.ToString(), Vector3.Zero },
+        { Bone.leg_upper_R.ToString(), Vector3.Zero },
+        { Bone.leg_lower_R.ToString(), Vector3.Zero },
+        { Bone.ankle_R.ToString(), Vector3.Zero }
+	};
 
     public override bool IsAlive()
     {

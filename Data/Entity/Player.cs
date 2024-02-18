@@ -21,7 +21,15 @@ public class Player : EntityBase
 
     public Vector3 EyeDirection { get; private set; }
 
-    public static int Fov => 90;
+	private IntPtr CurrentWeapon { get; set; }
+	private short WeaponIndex { get; set; }
+	protected internal string CurrentWeaponName { get; private set; } = null!;
+
+    public int Ammo { get; private set; }
+    public int Clip1 { get; private set; }
+    public int Clip2 { get; private set; }
+
+	public static int Fov => 90;
 
     private int FFlags { get; set; }
 
@@ -52,8 +60,15 @@ public class Player : EntityBase
         TargetedEntityIndex = gameProcess.Process.Read<int>(AddressBase + Offsets.m_iIDEntIndex);
         FFlags = gameProcess.Process.Read<int>(AddressBase + Offsets.m_fFlags);
 
+		CurrentWeapon = gameProcess.Process.Read<IntPtr>(AddressBase + Offsets.m_pClippingWeapon);
+		WeaponIndex = gameProcess.Process.Read<short>(CurrentWeapon + Offsets.m_AttributeManager + Offsets.m_Item + Offsets.m_iItemDefinitionIndex);
+		CurrentWeaponName = Enum.GetName(typeof(WeaponIndexes), WeaponIndex)!;
+        Ammo = gameProcess.Process.Read<int>(CurrentWeapon + Offsets.m_iAmmo);
+        Clip1 = gameProcess.Process.Read<int>(CurrentWeapon + Offsets.m_iClip1);
+		Clip2 = gameProcess.Process.Read<int>(CurrentWeapon + Offsets.m_iClip2);
 
-        EyeDirection =
+
+		EyeDirection =
             GraphicsMath.GetVectorFromEulerAngles(ViewAngles.X.DegreeToRadian(), ViewAngles.Y.DegreeToRadian());
         AimDirection = AimDirection = GraphicsMath.GetVectorFromEulerAngles
         (
